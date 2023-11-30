@@ -11,17 +11,12 @@ uploaded_file = st.file_uploader("이미지 파일 업로드.....", type=["jpg",
 
 # 이미지 처리 함수
 def process_image(image):
-    #  YCrCb 컬러 스페이스 변환
     ycrcb_image = cv2.cvtColor(image, cv2.COLOR_BGR2YCrCb)
-    # Y 채널 CLAHE 적용
     clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
     Y_channel, Cr, Cb = cv2.split(ycrcb_image)
     Y_channel = clahe.apply(Y_channel)
-    # 변경된 Y 채널 다시 YCrCb 병합
     merged_ycrcb = cv2.merge([Y_channel, Cr, Cb])
-    # YCrCb에서 BGR 컬러 스페이스 변환
     final_image = cv2.cvtColor(merged_ycrcb, cv2.COLOR_YCrCb2BGR)
-    # streamlit은 RGB형태로 이미지 불어들여옴. 그래서 억지로. 밑에.
     rgb_image = cv2.cvtColor(final_image, cv2.COLOR_BGR2RGB)
     return rgb_image
 
@@ -31,8 +26,8 @@ def convert_image_to_grayscale(image):
     return grayscale_image
 
 def rotate_image(image, angle):
-    # 90도 회전
-    rotated_image = cv2.rotate(image, angle)
+    # 이미지를 90도 시계 방향으로 회전
+    rotated_image = cv2.rotate(image, cv2.ROTATE_90_CLOCKWISE)
     return rotated_image
 
 def plot_histograms(original_image, processed_image):
@@ -72,7 +67,7 @@ if uploaded_file is not None:
     # 이미지 옵션 선택
     option = st.selectbox(
         '원하는 변환을 선택하세요:',
-        ('None', 'Histogram Equalization', '흑백변환', '90도 시계방향 회전', '90도 반시계방향 회전')
+        ('None', 'Histogram Equalization', '흑백변환', '90도 시계방향 회전')
     )
 
     # 이미지 표시
@@ -87,8 +82,4 @@ if uploaded_file is not None:
 
     elif option == '90도 시계방향 회전':
         rotated_image = rotate_image(image, cv2.ROTATE_90_CLOCKWISE)
-        st.image(rotated_image, caption='Rotated Image (90 degrees clockwise)', use_column_width=True)
-
-    elif option == '90도 반시계방향 회전':
-        rotated_image = rotate_image(image, cv2.ROTATE_90_COUNTERCLOCKWISE)
-        st.image(rotated_image, caption='Rotated Image (90 degrees counterclockwise)', use_column_width=True)
+        st.image(rotated_image, caption='Rotated Image (90 degrees)', use_column_width=True)
