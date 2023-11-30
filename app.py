@@ -34,6 +34,13 @@ def convert_image_to_grayscale(image):
     grayscale_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     return grayscale_image
 
+def rotate_image(image):
+    #이미지 90도 회전
+    rotated_image = cv2.rotate(image, cv2.ROTATE_90_CLOCKWISE)
+    return rotated_image
+
+
+
 
 
 
@@ -76,7 +83,7 @@ if uploaded_file is not None:
     # 이미지 옵션 선택
     option = st.selectbox(
         '원하는 변환을 선택하세요:',
-        ('None', 'Histogram Equalization', '흑백변환')
+        ('None', 'Histogram Equalization', '흑백변환', '90도 회전')
     )
 
     # 이미지 표시
@@ -88,3 +95,7 @@ if uploaded_file is not None:
     elif option == '흑백변환':
         grayscale_image = convert_image_to_grayscale(image)
         st.image(grayscale_image, caption='Grayscale Image', use_column_width=True)
+
+    elif option == '90도 회전':
+        rotate_image = rotate_image(image)
+        st.image(rotate_image, caption='Rotated Image', use_column_width=True)
