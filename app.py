@@ -98,4 +98,4 @@ if uploaded_file is not None:
 
     elif option == '90도 회전':
         rotated_image = rotate_image(image)
-        st.image(rotate_image, caption='Rotated Image', use_column_width=True)
+        st.image(rotated_image, caption='Rotated Image', use_column_width=True)
