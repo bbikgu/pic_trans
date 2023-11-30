@@ -3,8 +3,6 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-
-
 # 앱 제목
 st.title('이미지 변환')
 
@@ -27,22 +25,14 @@ def process_image(image):
     rgb_image = cv2.cvtColor(final_image, cv2.COLOR_BGR2RGB)
     return rgb_image
 
-
-
 def convert_image_to_grayscale(image):
     # 흑백 이미지 변환
     grayscale_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     return grayscale_image
 
-def rotate_image(image):
-    #이미지 90도 회전
-    rotated_image = cv2.rotate(image, cv2.ROTATE_90_CLOCKWISE)
+def rotate_image(image, angle):
+    rotated_image = cv2.rotate(image, angle)
     return rotated_image
-
-
-
-
-
 
 def plot_histograms(original_image, processed_image):
     # 히스토그램 위한 YCrCb 분리.
@@ -68,8 +58,6 @@ def plot_histograms(original_image, processed_image):
         axs[1, i].set_title(f'Convert {channels[i]} Histogram')
 
     return fig
-
-
 
 # 이미지 처리 선택
 if uploaded_file is not None:
@@ -97,5 +85,7 @@ if uploaded_file is not None:
         st.image(grayscale_image, caption='Grayscale Image', use_column_width=True)
 
     elif option == '90도 회전':
-        rotated_image = rotate_image(image)
-        st.image(rotated_image, caption='Rotated Image', use_column_width=True)
+        rotated_image = rotate_image(image, cv2.ROTATE_90_CLOCKWISE)
+        st.image(rotated_image, caption='Rotated Image (90 degrees)', use_column_width=True)
+
+    
