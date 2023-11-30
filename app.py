@@ -32,8 +32,7 @@ def convert_image_to_grayscale(image):
 
 def rotate_image(image, angle):
     # 90도 회전
-    rotated_image = cv2.transpose(image)
-    rotated_image = cv2.flip(rotated_image, flipCode=angle)  # 0 for horizontal flip, 1 for vertical flip
+    rotated_image = cv2.rotate(image, angle)
     return rotated_image
 
 def plot_histograms(original_image, processed_image):
@@ -73,7 +72,7 @@ if uploaded_file is not None:
     # 이미지 옵션 선택
     option = st.selectbox(
         '원하는 변환을 선택하세요:',
-        ('None', 'Histogram Equalization', '흑백변환', '90도 회전')
+        ('None', 'Histogram Equalization', '흑백변환', '90도 시계방향 회전', '90도 반시계방향 회전')
     )
 
     # 이미지 표시
@@ -86,6 +85,10 @@ if uploaded_file is not None:
         grayscale_image = convert_image_to_grayscale(image)
         st.image(grayscale_image, caption='Grayscale Image', use_column_width=True)
 
-    elif option == '90도 회전':
-        rotated_image = rotate_image(image, 0)  # 0 for horizontal flip, 1 for vertical flip
-        st.image(rotated_image, caption='Rotated Image (90 degrees)', use_column_width=True)
+    elif option == '90도 시계방향 회전':
+        rotated_image = rotate_image(image, cv2.ROTATE_90_CLOCKWISE)
+        st.image(rotated_image, caption='Rotated Image (90 degrees clockwise)', use_column_width=True)
+
+    elif option == '90도 반시계방향 회전':
+        rotated_image = rotate_image(image, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        st.image(rotated_image, caption='Rotated Image (90 degrees counterclockwise)', use_column_width=True)
