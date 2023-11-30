@@ -97,5 +97,5 @@ if uploaded_file is not None:
         st.image(grayscale_image, caption='Grayscale Image', use_column_width=True)
 
     elif option == '90도 회전':
-        rotate_image = rotate_image(image)
+        rotated_image = rotate_image(image)
         st.image(rotate_image, caption='Rotated Image', use_column_width=True)
