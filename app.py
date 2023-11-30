@@ -82,4 +82,5 @@ if uploaded_file is not None:
 
     elif option == '90도 시계방향 회전':
         rotated_image = rotate_image(image, cv2.ROTATE_90_CLOCKWISE)
-        st.image(rotated_image, caption='Rotated Image (90 degrees)')
+        st.image(rotated_image, caption='Rotated Image', use_column_width=True)
+        st.pyplot(plot_histograms(image, rotated_image))
