@@ -31,15 +31,9 @@ def convert_image_to_grayscale(image):
     return grayscale_image
 
 def rotate_image(image, angle):
-    # 회전 중심점 계산
-    center = (image.shape[1] // 2, image.shape[0] // 2)
-
-    # 회전 변환 행렬 계산
-    rotation_matrix = cv2.getRotationMatrix2D(center, angle, 1.0)
-
-    # 회전된 이미지 계산
-    rotated_image = cv2.warpAffine(image, rotation_matrix, (image.shape[1], image.shape[0]))
-
+    # 90도 회전
+    rotated_image = cv2.transpose(image)
+    rotated_image = cv2.flip(rotated_image, flipCode=angle)  # 0 for horizontal flip, 1 for vertical flip
     return rotated_image
 
 def plot_histograms(original_image, processed_image):
@@ -93,11 +87,5 @@ if uploaded_file is not None:
         st.image(grayscale_image, caption='Grayscale Image', use_column_width=True)
 
     elif option == '90도 회전':
-        rotated_image = rotate_image(image, 90)
-
-        # 회전된 이미지를 원본 이미지 크기로 자르기
-        rotated_image = rotated_image[:image.shape[0], :image.shape[1]]
-
+        rotated_image = rotate_image(image, 0)  # 0 for horizontal flip, 1 for vertical flip
         st.image(rotated_image, caption='Rotated Image (90 degrees)', use_column_width=True)
-
-    
