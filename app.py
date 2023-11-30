@@ -25,7 +25,7 @@ def convert_image_to_grayscale(image):
     grayscale_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     return grayscale_image
 
-def rotate_image(image):
+def rotate_image(image, angle):
     # 이미지를 90도 시계 방향으로 회전
     rotated_image = cv2.rotate(image, cv2.ROTATE_90_CLOCKWISE)
     return rotated_image
@@ -82,4 +82,4 @@ if uploaded_file is not None:
 
     elif option == '90도 시계방향 회전':
         rotated_image = rotate_image(image, cv2.ROTATE_90_CLOCKWISE)
-        st.image(rotated_image, caption='Rotated Image (90 degrees)', use_column_width=True)
+        st.image(rotated_image, caption='Rotated Image (90 degrees)')
