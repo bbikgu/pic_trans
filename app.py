@@ -17,9 +17,13 @@ def process_image(image):
     Y_channel = clahe.apply(Y_channel)
     merged_ycrcb = cv2.merge([Y_channel, Cr, Cb])
     final_image = cv2.cvtColor(merged_ycrcb, cv2.COLOR_YCrCb2)
-    rgb_image = cv2.cvtColor(final_image, cv2.COLOR_RGB2BGR)
+    rgb_image = cv2.cvtColor(final_image, cv2.COLOR_BGR2RGB)
     return rgb_image
 
+def brg_to_rgb(image):
+    # BGR을 RGB로 변환
+    rgb_image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+    return rgb_image
 
 def convert_image_to_grayscale(image):
     # 흑백 이미지 변환
