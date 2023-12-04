@@ -20,15 +20,16 @@ def process_image(image):
     rgb_image = cv2.cvtColor(final_image, cv2.COLOR_BGR2RGB)
     return rgb_image
 
-def brg_to_rgb(image):
-    # BGR을 RGB로 변환
-    rgb_image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-    return rgb_image
 
 def convert_image_to_grayscale(image):
     # 흑백 이미지 변환
     grayscale_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     return grayscale_image
+
+def convert_bgr_to_rgb(image):
+    # BGR을 RGB로 변환
+    rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    return rgb_image
 
 def rotate_image(image, angle):
     # 이미지를 90도 시계 방향으로 회전
@@ -65,6 +66,7 @@ if uploaded_file is not None:
     # 이미지 읽기
     file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
     image = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
+    rgb_image = convert_bgr_to_rgb(image)
 
     # 원본 이미지 표시
     st.image(uploaded_file, caption='Original Image', use_column_width=True)
