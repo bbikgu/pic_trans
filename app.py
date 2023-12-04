@@ -16,9 +16,10 @@ def process_image(image):
     Y_channel, Cr, Cb = cv2.split(ycrcb_image)
     Y_channel = clahe.apply(Y_channel)
     merged_ycrcb = cv2.merge([Y_channel, Cr, Cb])
-    final_image = cv2.cvtColor(merged_ycrcb, cv2.COLOR_YCrCb2BGR)
-    rgb_image = cv2.cvtColor(final_image, cv2.COLOR_BGR2RGB)
+    final_image = cv2.cvtColor(merged_ycrcb, cv2.COLOR_YCrCb2)
+    rgb_image = cv2.cvtColor(final_image, cv2.COLOR_RGB2BGR)
     return rgb_image
+
 
 def convert_image_to_grayscale(image):
     # 흑백 이미지 변환
@@ -82,5 +83,4 @@ if uploaded_file is not None:
 
     elif option == '90도 시계방향 회전':
         rotated_image = rotate_image(image, cv2.ROTATE_90_CLOCKWISE)
-        st.image(rotated_image, caption='Rotated Image', use_column_width=True)
-        st.pyplot(plot_histograms(image, rotated_image))
+        st.image(rotated_image, caption='Rotated Image (90 degrees)', use_column_width=True)
