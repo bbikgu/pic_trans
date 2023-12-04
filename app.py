@@ -16,7 +16,7 @@ def process_image(image):
     Y_channel, Cr, Cb = cv2.split(ycrcb_image)
     Y_channel = clahe.apply(Y_channel)
     merged_ycrcb = cv2.merge([Y_channel, Cr, Cb])
-    final_image = cv2.cvtColor(merged_ycrcb, cv2.COLOR_YCrCb2)
+    final_image = cv2.cvtColor(merged_ycrcb, cv2.COLOR_YCrCb2BGR)
     rgb_image = cv2.cvtColor(final_image, cv2.COLOR_BGR2RGB)
     return rgb_image
 
@@ -26,14 +26,12 @@ def convert_image_to_grayscale(image):
     grayscale_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     return grayscale_image
 
-def convert_bgr_to_rgb(image):
-    # BGR을 RGB로 변환
-    rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    return rgb_image
+
 
 def rotate_image(image, angle):
     # 이미지를 90도 시계 방향으로 회전
     rotated_image = cv2.rotate(image, cv2.ROTATE_90_CLOCKWISE)
+    rotated_image = cv2.cvtColor(rotated_image, cv2.COLOR_BGR2RGB)
     return rotated_image
 
 def plot_histograms(original_image, processed_image):
@@ -66,7 +64,7 @@ if uploaded_file is not None:
     # 이미지 읽기
     file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
     image = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
-    rgb_image = convert_bgr_to_rgb(image)
+   
 
     # 원본 이미지 표시
     st.image(uploaded_file, caption='Original Image', use_column_width=True)
